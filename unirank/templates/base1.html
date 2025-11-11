@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+{% load static %}
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Navbar</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+     <style>
     :root {
       --orange-primary: #ff8c42;
       --orange-dark: #ff7b2d;
@@ -144,7 +145,6 @@
     .navbar-toggler {
       border: none;
       outline: none;
-      padding: 0.25rem 0.5rem;
     }
 
     .navbar-toggler:focus {
@@ -152,10 +152,10 @@
       outline: none;
     }
 
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23ff8c42' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
-      width: 1.5rem;
-      height: 1.5rem;
+    .navbar-toggler span {
+      background-color: #ff8c42;
+      height: 3px;
+      border-radius: 2px;
     }
 
     .auth-buttons {
@@ -195,10 +195,9 @@
       }
     }
   </style>
-</head>
-<body>
-
-<nav class="navbar navbar-expand-lg navbar-light">
+  </head>
+  <body>
+  <nav class="navbar navbar-expand-lg navbar-light">
   <div class="container-fluid px-4">
     <a class="navbar-brand" href="/">
       <div class="brand-icon">
@@ -219,10 +218,10 @@
           <a class="nav-link" href="/">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/about">Leaderboard</a>
+          <a class="nav-link" href="/about">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/services">Dashboard</a>
+          <a class="nav-link" href="/services">Leaderboard</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/portfolio">Portfolio</a>
@@ -240,11 +239,11 @@
   </div>
 </nav>
 
-{% block content %}{% endblock content %}
-{% block form %}{% endblock form %}
-{% block footer %}{% endblock footer %}
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-</body>
+    
+    {% block content %}{% endblock content %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
 </html>

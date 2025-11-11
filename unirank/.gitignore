@@ -19,7 +19,7 @@ var/
 .venv/
 env/
 venv/
-
+/base1.html
 # Django stuff:
 *.log
 *.pot
@@ -28,6 +28,7 @@ venv/
 db.sqlite3
 media/
 static/
+/base1.html
 
 # IDE-specific files
 .idea/
