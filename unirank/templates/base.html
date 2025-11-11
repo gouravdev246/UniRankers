@@ -194,6 +194,55 @@
         padding: 10px 16px !important;
       }
     }
+
+    /* Custom styles for signup page */
+    body {
+      background-color: var(--orange-light);
+    }
+
+    .card {
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      border-bottom: none;
+    }
+
+    .form-control {
+      border-radius: 8px;
+      border-color: #ddd;
+      padding: 10px 15px;
+    }
+
+    .form-control:focus {
+      border-color: var(--orange-primary);
+      box-shadow: 0 0 0 0.25rem rgba(255, 140, 66, 0.25);
+    }
+
+    .btn-signup {
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 1.1rem;
+    }
+
+    .form-text {
+      font-size: 0.85rem;
+      color: #6c757d;
+    }
+
+    .form-check-input:checked {
+      background-color: var(--orange-primary);
+      border-color: var(--orange-primary);
+    }
+
+    .form-check-input:focus {
+      box-shadow: 0 0 0 0.25rem rgba(255, 140, 66, 0.25);
+    }
+
+    .small a {
+      font-weight: 500;
+    }
   </style>
 </head>
 <body>
@@ -234,7 +283,7 @@
 
       <div class="auth-buttons">
         <a href={% url "login" %}" class="btn-login">Login</a>
-        <a href="/signup" class="btn-signup">Sign Up</a>
+        <a href="{% url "signup" %}" class="btn-signup">Sign Up</a>
       </div>
     </div>
   </div>
