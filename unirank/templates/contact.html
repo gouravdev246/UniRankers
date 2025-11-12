@@ -55,23 +55,31 @@
           <div class="col-12 col-md-7">
             <div class="card border-0 shadow-sm h-100">
               <div class="card-body p-4">
-                <form>
+                {% if messages %}
+                  <div class="mb-3">
+                    {% for message in messages %}
+                      <div class="alert alert-{{ message.tags }} mb-2" role="alert">{{ message }}</div>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+                <form method="post" action="" novalidate>
+                  {% csrf_token %}
                   <div class="row g-3">
                     <div class="col-12 col-md-6">
                       <label for="name" class="form-label">Name</label>
-                      <input type="text" class="form-control" id="name" placeholder="Your name" required>
+                      <input type="text" class="form-control" id="name" name="name" placeholder="Your name" required>
                     </div>
                     <div class="col-12 col-md-6">
                       <label for="email" class="form-label">Email</label>
-                      <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                      <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" required>
                     </div>
                     <div class="col-12">
                       <label for="subject" class="form-label">Subject</label>
-                      <input type="text" class="form-control" id="subject" placeholder="How can we help?" required>
+                      <input type="text" class="form-control" id="subject" name="subject" placeholder="How can we help?" required>
                     </div>
                     <div class="col-12">
                       <label for="message" class="form-label">Message</label>
-                      <textarea class="form-control" id="message" rows="5" placeholder="Write your message here..." required></textarea>
+                      <textarea class="form-control" id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
                     </div>
                     <div class="col-12 d-grid">
                       <button type="submit" class="btn" style="background: linear-gradient(135deg, var(--orange-primary), var(--orange-dark)); color: #fff; box-shadow: 0 4px 12px rgba(255, 140, 66, 0.3);">Send Message</button>

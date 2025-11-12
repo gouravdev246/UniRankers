@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="py-5" style="background: linear-gradient(135deg, var(--orange-light), #fff);">
+  <div class="container">
+    <div class="row mb-4 align-items-center">
+      <div class="col">
+        <h1 class="h3" style="color: var(--orange-dark);">Dashboard</h1>
+        <p class="text-muted mb-0">Welcome, {{ request.user.name }}. Manage your achievements and view your rank.</p>
+      </div>
+      <div class="col-auto">
+        <a href="{% url 'logout' %}" class="btn btn-outline-dark">Logout</a>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-12 col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-header" style="background: linear-gradient(135deg, var(--orange-primary), var(--orange-dark));">
+            <h2 class="h6 m-0 text-white">Quick Links</h2>
+          </div>
+          <div class="card-body">
+            <div class="d-grid gap-2">
+              <a class="btn btn-warning" style="background: linear-gradient(135deg, var(--orange-primary), var(--orange-dark)); border:none;" href="{% url 'leaderboard' %}">View Leaderboard</a>
+              <a class="btn btn-outline-secondary" href="{% url 'profile' %}">My Profile</a>
+              <a class="btn btn-outline-secondary" href="{% url 'add_achievement' %}">Add Achievement</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-lg-6">
+        <div class="card shadow-sm">
+          <div class="card-header" style="background: linear-gradient(135deg, var(--orange-primary), var(--orange-dark));">
+            <h2 class="h6 m-0 text-white">My Stats</h2>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled mb-0">
+              <li class="mb-2"><span class="text-muted">Email:</span> <span class="fw-semibold">{{ request.user.email }}</span></li>
+              <li class="mb-2"><span class="text-muted">Phone:</span> <span class="fw-semibold">{{ request.user.phone_number|default:"Not added" }}</span></li>
+              <li><span class="text-muted">Joined:</span> <span class="fw-semibold">{{ request.user.created_at|date:"M d, Y" }}</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

@@ -4,6 +4,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
+from django.db.models import Sum
+from django.db.models.functions import Coalesce
+from leaderboard.models import Achievement
 
 
 def signup_view(request):
@@ -52,4 +55,6 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    return render(request, 'profile.html')
+    achievements = Achievement.objects.filter(user=request.user).order_by('-created_at')
+    total_points = achievements.aggregate(total=Coalesce(Sum('points'), 0))['total']
+    return render(request, 'profile.html', {"achievements": achievements, "total_points": total_points})

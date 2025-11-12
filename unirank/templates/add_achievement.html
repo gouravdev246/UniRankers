@@ -1,0 +1,151 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="py-5" style="background: linear-gradient(135deg, var(--orange-light), #fff);">
+  <div class="container">
+    <div class="row mb-4 align-items-center">
+      <div class="col">
+        <h1 class="h3" style="color: var(--orange-dark);">Add Achievement</h1>
+        <p class="text-muted mb-0">Submit certifications, skills, badges or CGPA. Points are awarded automatically.</p>
+      </div>
+      <div class="col-auto">
+        <a href="{% url 'leaderboard' %}" class="btn btn-outline-dark">View Leaderboard</a>
+      </div>
+    </div>
+
+    {% if messages %}
+      <div class="mb-3">
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} mb-2" role="alert">{{ message }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="card shadow-sm">
+      <div class="card-header" style="background: linear-gradient(135deg, var(--orange-primary), var(--orange-dark));">
+        <h2 class="h6 m-0 text-white">Achievement Details</h2>
+      </div>
+      <div class="card-body">
+        <form method="post" enctype="multipart/form-data" class="row g-3" id="achievement-form">
+          {% csrf_token %}
+
+          <div class="col-12 col-md-6" id="field-category">
+            <label class="form-label" for="id_category">Category</label>
+            {{ form.category }}
+            <div class="form-text">Certification = 10 pts, Skill = 5 pts, Badge = 3 pts, CGPA = cgpa×10 pts.</div>
+          </div>
+
+          <div class="col-12 col-md-6" id="field-title">
+            <label class="form-label" for="id_title">Title</label>
+            {{ form.title }}
+          </div>
+
+          <div class="col-12" id="field-details">
+            <label class="form-label" for="id_details">Details</label>
+            {{ form.details }}
+          </div>
+
+          <div class="col-12 col-md-6" id="field-value">
+            <label class="form-label" id="label-value" for="id_value">Value</label>
+            {{ form.value }}
+            <div class="form-text" id="help-value">Skill level, badge name, certificate code, etc.</div>
+          </div>
+
+          <div class="col-12 col-md-6" id="field-cgpa">
+            <label class="form-label" for="id_cgpa">CGPA</label>
+            {{ form.cgpa }}
+          </div>
+
+          <div class="col-12" id="field-image">
+            <label class="form-label" for="id_certificate_image">Certificate Image</label>
+            {{ form.certificate_image }}
+          </div>
+
+          <div class="col-12">
+            <button type="submit" class="btn btn-warning" style="background: linear-gradient(135deg, var(--orange-primary), var(--orange-dark)); border:none;">Submit Achievement</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  (function() {
+    const cat = document.getElementById('id_category');
+    const fieldTitle = document.getElementById('field-title');
+    const fieldDetails = document.getElementById('field-details');
+    const fieldValue = document.getElementById('field-value');
+    const fieldCgpa = document.getElementById('field-cgpa');
+    const fieldImage = document.getElementById('field-image');
+    const labelValue = document.getElementById('label-value');
+    const helpValue = document.getElementById('help-value');
+    const inputTitle = document.getElementById('id_title');
+    const inputValue = document.getElementById('id_value');
+    const inputCgpa = document.getElementById('id_cgpa');
+    const inputImage = document.getElementById('id_certificate_image');
+
+    function toggle() {
+      const v = cat.value;
+      fieldDetails.style.display = '';
+
+      if (v === 'CERTIFICATION') {
+        fieldTitle.style.display = '';
+        fieldValue.style.display = '';
+        fieldCgpa.style.display = 'none';
+        fieldImage.style.display = '';
+        labelValue.textContent = 'Skills';
+        helpValue.textContent = 'Skills gained or related code.';
+        inputTitle.required = true;
+        inputValue.required = true;
+        inputCgpa.required = false;
+        inputImage.required = true;
+      } else if (v === 'SKILL') {
+        fieldTitle.style.display = '';
+        fieldValue.style.display = '';
+        fieldCgpa.style.display = 'none';
+        fieldImage.style.display = 'none';
+        labelValue.textContent = 'Skill';
+        helpValue.textContent = 'Skill name or proficiency level.';
+        inputTitle.required = true;
+        inputValue.required = true;
+        inputCgpa.required = false;
+        inputImage.required = false;
+      } else if (v === 'BADGE') {
+        fieldTitle.style.display = '';
+        fieldValue.style.display = '';
+        fieldCgpa.style.display = 'none';
+        fieldImage.style.display = 'none';
+        labelValue.textContent = 'Badge';
+        helpValue.textContent = 'Badge name or issuer.';
+        inputTitle.required = true;
+        inputValue.required = true;
+        inputCgpa.required = false;
+        inputImage.required = false;
+      } else if (v === 'CGPA') {
+        fieldTitle.style.display = 'none';
+        fieldValue.style.display = 'none';
+        fieldCgpa.style.display = '';
+        fieldImage.style.display = 'none';
+        inputTitle.required = false;
+        inputValue.required = false;
+        inputCgpa.required = true;
+        inputImage.required = false;
+      } else {
+        fieldTitle.style.display = '';
+        fieldValue.style.display = '';
+        fieldCgpa.style.display = 'none';
+        fieldImage.style.display = 'none';
+        labelValue.textContent = 'Value';
+        helpValue.textContent = 'Additional value or code.';
+        inputTitle.required = true;
+        inputValue.required = false;
+        inputCgpa.required = false;
+        inputImage.required = false;
+      }
+    }
+
+    cat.addEventListener('change', toggle);
+    toggle();
+  })();
+</script>
+{% endblock content %}
