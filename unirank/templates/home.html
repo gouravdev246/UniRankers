@@ -1,9 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
-<h2>Welcome, {{ request.user.first_name }}!</h2>
-<p>Email: {{ request.user.email }}</p>
-<a href="{% url 'logout' %}">Logout</a>
+<p>Welcome to UniRankers!</p>
 {% endblock content %}
 
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import User
 from django.contrib import messages
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
 
@@ -40,17 +40,16 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Login successful!")
-            return redirect('home')  # Redirect to home or dashboard
+            return redirect('profile')  # Redirect to home or dashboard
         else:
             messages.error(request, "Invalid email or password.")
     return render(request, 'login.html')
 
-
-
-
-# def login_view(request):
-#     return render(request, 'login1.html')
+def logout_view(request):
+    logout(request)
+    messages.success(request, "You have been logged out successfully.")
+    return redirect('home')
 
 @login_required
-def home(request):
-    return render(request, 'home.html')
+def profile_view(request):
+    return render(request, 'profile.html')
