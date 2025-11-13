@@ -31,11 +31,15 @@
                 <td class="fw-semibold">#{{ item.rank }}</td>
                 <td>
                   <div class="d-flex align-items-center gap-2">
-                    <div class="user-avatar" style="width:32px;height:32px;font-size:0.85rem;">
-                      {{ item.user.name|default:"U"|slice:":1"|upper }}
-                    </div>
+                    {% if item.user.profile_photo %}
+                      <a href="{% url 'public_profile' item.user.id %}"><img src="{{ item.user.profile_photo.url }}" alt="Avatar" class="rounded-circle" style="width:32px;height:32px;object-fit:cover;"></a>
+                    {% else %}
+                      <a href="{% url 'public_profile' item.user.id %}"><div class="user-avatar" style="width:32px;height:32px;font-size:0.85rem;">
+                        {{ item.user.name|default:"U"|slice:":1"|upper }}
+                      </div></a>
+                    {% endif %}
                     <div>
-                      <div class="fw-semibold">{{ item.user.name }}</div>
+                      <div class="fw-semibold"><a href="{% url 'public_profile' item.user.id %}" class="text-decoration-none">{{ item.user.name }}</a></div>
                       <div class="text-muted" style="font-size: 0.85rem;">{{ item.user.email }}</div>
                     </div>
                   </div>

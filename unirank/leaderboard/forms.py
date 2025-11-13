@@ -32,3 +32,29 @@ class AchievementForm(forms.ModelForm):
             if not value:
                 self.add_error("value", "This field is required for this category.")
         return cleaned
+
+
+class SkillsForm(forms.ModelForm):
+    class Meta:
+        model = Achievement
+        fields = [
+            "value",
+            "branch",
+            "semester",
+            "skill_level",
+            "skill_category",
+        ]
+
+    def clean(self):
+        cleaned = super().clean()
+        if not cleaned.get("value"):
+            self.add_error("value", "Skill name is required.")
+        if not cleaned.get("branch"):
+            self.add_error("branch", "Branch name is required.")
+        if not cleaned.get("semester"):
+            self.add_error("semester", "Select a semester.")
+        if not cleaned.get("skill_level"):
+            self.add_error("skill_level", "Select a level.")
+        if not cleaned.get("skill_category"):
+            self.add_error("skill_category", "Select a category.")
+        return cleaned

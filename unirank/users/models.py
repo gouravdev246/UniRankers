@@ -30,6 +30,32 @@ class User(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    profile_photo = models.ImageField(upload_to='profiles/', blank=True, null=True)
+    cgpa = models.DecimalField(max_digits=3, decimal_places=2, blank=True, null=True)
+    course = models.CharField(
+        max_length=16,
+        blank=True,
+        choices=(
+            ('BTECH', 'B.Tech'),
+            ('BBA', 'BBA'),
+            ('MCA', 'MCA'),
+            ('BCA', 'BCA'),
+            ('MBA', 'MBA'),
+            ('BA', 'BA'),
+            ('MA', 'MA'),
+        ),
+    )
+    branch = models.CharField(max_length=100, blank=True)
+    semester = models.PositiveSmallIntegerField(
+        choices=[(i, i) for i in range(1, 9)],
+        blank=True,
+        null=True,
+    )
+    github_url = models.URLField(blank=True)
+    linkedin_url = models.URLField(blank=True)
+    instagram_url = models.URLField(blank=True)
+    leetcode_url = models.URLField(blank=True)
+    website_url = models.URLField(blank=True)
 
     groups = models.ManyToManyField(
         'auth.Group',
