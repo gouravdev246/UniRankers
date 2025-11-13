@@ -1,10 +1,12 @@
 from django.contrib import admin
-from .models import User, ContactMessage
+from django.contrib.auth import get_user_model
+from .models import ContactMessage
 
 # Register your models here.
-from .models import User
+User = get_user_model()
 
 admin.site.register(User)
+
 
 @admin.register(ContactMessage)
 class ContactMessageAdmin(admin.ModelAdmin):

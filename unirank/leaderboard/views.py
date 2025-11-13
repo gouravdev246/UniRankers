@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.http import HttpResponseForbidden
 
-from users.models import User
+from users.models import CustomUser as User
 from .forms import AchievementForm, SkillsForm
 from .models import Achievement, Like, Comment
 

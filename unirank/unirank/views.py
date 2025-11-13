@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.contrib import messages
 from users.models import ContactMessage
 from django.contrib.auth.decorators import login_required
-from users.models import User
+from users.models import CustomUser as User
 from leaderboard.models import Achievement
 
 def home(request):
