@@ -29,6 +29,7 @@ db.sqlite3
 media/
 static/
 /base1.html
+/settings.py
 
 # IDE-specific files
 .idea/
