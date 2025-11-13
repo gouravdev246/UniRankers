@@ -1,6 +1,145 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock %}
 {% block content %}
-<p>Welcome to UniRankers!</p>
-{% endblock content %}
+<header class="hero">
+  <div class="hero-bg">
+    <div class="bg-layer layer-1"></div>
+    <div class="bg-layer layer-2"></div>
+  </div>
+  <div class="hero-content container">
+    <h1 class="reveal">Level up your university journey</h1>
+    <p class="subheading reveal">Showcase achievements, climb leaderboards, and connect with mentors.</p>
+    <div class="cta reveal">
+      <a href="{% url 'signup' %}" class="btn btn-signup">Get Started</a>
+      <a href="{% url 'leaderboard' %}" class="btn btn-login">View Leaderboard</a>
+    </div>
+  </div>
+  </header>
+<main>
+  <section class="features container">
+    <div class="row g-4">
+      <div class="col-12 col-md-6 col-lg-3">
+        <article class="feature-card reveal" aria-label="Leaderboard">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13 10V3L4 14h7v7l9-11h-7z"/>
+            </svg>
+          </div>
+          <h3>Leaderboard</h3>
+          <p>Track rankings and celebrate progress.</p>
+        </article>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <article class="feature-card reveal" aria-label="Portfolio">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="14" rx="3"/>
+              <path d="M3 10h18"/>
+            </svg>
+          </div>
+          <h3>Portfolio</h3>
+          <p>Curate projects, certificates, and achievements.</p>
+        </article>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <article class="feature-card reveal" aria-label="Mentorship">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="8" cy="8" r="3"/>
+              <circle cx="16" cy="16" r="3"/>
+              <path d="M11 11l3 3"/>
+            </svg>
+          </div>
+          <h3>Mentorship</h3>
+          <p>Connect with mentors to accelerate growth.</p>
+        </article>
+      </div>
+      <div class="col-12 col-md-6 col-lg-3">
+        <article class="feature-card reveal" aria-label="Achievements">
+          <div class="icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l3 7h7l-5.5 4 2 7L12 16l-6.5 4 2-7L2 9h7z"/>
+            </svg>
+          </div>
+          <h3>Achievements</h3>
+          <p>Collect and share verified certificates.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+</main>
+<section class="quotes container-fluid">
+  <div id="quotesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="8000">
+    <div class="carousel-inner">
+      <div class="carousel-item active position-relative">
+        <img src="https://images.unsplash.com/photo-1543269865-4c65b2143c8b?q=80&w=1600&auto=format&fit=crop" class="d-block w-100" alt="Students collaborating">
+        <div class="quote-overlay">
+          <div>
+            <div class="quote-text">Your progress deserves the spotlight. Share achievements and inspire peers.</div>
+            <div class="quote-author">UniRankers Community</div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item position-relative">
+        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=1600&auto=format&fit=crop" class="d-block w-100" alt="Mentorship session">
+        <div class="quote-overlay">
+          <div>
+            <div class="quote-text">Mentorship accelerates growth—connect, learn, and level up together.</div>
+            <div class="quote-author">Mentors Network</div>
+          </div>
+        </div>
+      </div>
+      <div class="carousel-item position-relative">
+        <img src="https://images.unsplash.com/photo-1523580494863-6f3031224c55?q=80&w=1600&auto=format&fit=crop" class="d-block w-100" alt="Achievement celebration">
+        <div class="quote-overlay">
+          <div>
+            <div class="quote-text">Celebrate wins—big or small. Consistency builds champions.</div>
+            <div class="quote-author">Student Leaders</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#quotesCarousel" data-bs-slide="prev" aria-label="Previous">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#quotesCarousel" data-bs-slide="next" aria-label="Next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+  </div>
+</section>
 
-
+<section class="info container">
+  <div class="row g-4">
+    <div class="col-12">
+      <div class="callout reveal">
+        <h2>How it works</h2>
+        <p>Build your portfolio, earn achievements, and climb the leaderboard. Request mentorship when you need guidance and connect with peers to stay motivated.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="callout reveal">
+        <h3>Create</h3>
+        <p>Add projects and certificates to showcase your journey.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="callout reveal">
+        <h3>Compete</h3>
+        <p>Track progress on the leaderboard and set new goals.</p>
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="callout reveal">
+        <h3>Connect</h3>
+        <p>Find mentors and peers who can help you grow faster.</p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block extra_scripts %}
+<script src="{% static 'js/home.js' %}"></script>
+{% endblock %}
