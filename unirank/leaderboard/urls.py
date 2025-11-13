@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path("", views.leaderboard_view, name="leaderboard"),
     path("add/", views.add_achievement_view, name="add_achievement"),
+    path("<int:achievement_id>/delete/", views.achievement_delete_view, name="achievement_delete"),
     path("<int:achievement_id>/like/", views.like_toggle, name="like_toggle"),
     path("<int:achievement_id>/comments/", views.comments_list, name="comments_list"),
     path("<int:achievement_id>/comment/", views.comment_create, name="comment_create"),

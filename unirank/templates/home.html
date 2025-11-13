@@ -70,8 +70,30 @@
       </div>
     </div>
   </section>
+  <section class="stats container reveal" aria-label="Platform stats">
+    <div class="row g-4">
+      <div class="col-12 col-md-4">
+        <div class="stat-card">
+          <div class="stat-number" data-target="{{ stats.users_count }}">{{ stats.users_count }}</div>
+          <div class="stat-label">Students Registered</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="stat-card">
+          <div class="stat-number" data-target="{{ stats.achievements_count }}">{{ stats.achievements_count }}</div>
+          <div class="stat-label">Achievements Added</div>
+        </div>
+      </div>
+      <div class="col-12 col-md-4">
+        <div class="stat-card">
+          <div class="stat-number" data-target="{{ stats.mentors_count }}">{{ stats.mentors_count }}</div>
+          <div class="stat-label">Mentors Available</div>
+        </div>
+      </div>
+    </div>
+  </section>
 </main>
-<section class="quotes container-fluid">
+{% comment %} <section class="quotes container-fluid">
   <div id="quotesCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="8000">
     <div class="carousel-inner">
       <div class="carousel-item active position-relative">
@@ -109,7 +131,7 @@
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
     </button>
   </div>
-</section>
+</section> {% endcomment %}
 
 <section class="info container">
   <div class="row g-4">

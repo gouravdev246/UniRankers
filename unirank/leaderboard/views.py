@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponseBadRequest
+from django.http import HttpResponseForbidden
 
 from users.models import User
 from .forms import AchievementForm, SkillsForm
@@ -166,3 +167,19 @@ def manage_skills_view(request):
     else:
         form = SkillsForm()
     return render(request, "manage_skills.html", {"skills": skills, "form": form})
+
+
+@login_required
+def achievement_delete_view(request, achievement_id):
+    if request.method != "POST":
+        return HttpResponseBadRequest()
+    try:
+        achievement = Achievement.objects.get(pk=achievement_id)
+    except Achievement.DoesNotExist:
+        messages.error(request, "Achievement not found.")
+        return redirect("profile")
+    if achievement.user_id != request.user.id:
+        return HttpResponseForbidden()
+    achievement.delete()
+    messages.success(request, "Achievement deleted.")
+    return redirect("profile")

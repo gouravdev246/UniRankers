@@ -2,9 +2,16 @@ from django.shortcuts import render
 from django.contrib import messages
 from users.models import ContactMessage
 from django.contrib.auth.decorators import login_required
+from users.models import User
+from leaderboard.models import Achievement
 
 def home(request):
-    return render(request, 'home.html')
+    stats = {
+        "users_count": User.objects.count(),
+        "achievements_count": Achievement.objects.count(),
+        "mentors_count": 0,
+    }
+    return render(request, 'home.html', {"stats": stats})
 
 def contact(request):
     if request.method == 'POST':
