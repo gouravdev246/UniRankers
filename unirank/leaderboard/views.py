@@ -4,10 +4,11 @@ from django.db.models.functions import Coalesce
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.http import JsonResponse, HttpResponseBadRequest
 
 from users.models import User
-from .forms import AchievementForm
-from .models import Achievement
+from .forms import AchievementForm, SkillsForm
+from .models import Achievement, Like, Comment
 
 
 def leaderboard_view(request):
@@ -66,3 +67,102 @@ def add_achievement_view(request):
     else:
         form = AchievementForm()
     return render(request, "add_achievement.html", {"form": form})
+
+
+@login_required
+def like_toggle(request, achievement_id):
+    if request.method != "POST":
+        return HttpResponseBadRequest()
+    try:
+        achievement = Achievement.objects.get(pk=achievement_id)
+    except Achievement.DoesNotExist:
+        return JsonResponse({"error": "Not found"}, status=404)
+    like, created = Like.objects.get_or_create(user=request.user, achievement=achievement)
+    if not created:
+        like.delete()
+    count = achievement.likes.count()
+    return JsonResponse({"liked": created, "count": count})
+
+
+@login_required
+def comment_create(request, achievement_id):
+    if request.method != "POST":
+        return HttpResponseBadRequest()
+    content = request.POST.get("content", "").strip()
+    parent_id = request.POST.get("parent")
+    if not content:
+        return JsonResponse({"error": "Empty"}, status=400)
+    try:
+        achievement = Achievement.objects.get(pk=achievement_id)
+    except Achievement.DoesNotExist:
+        return JsonResponse({"error": "Not found"}, status=404)
+    parent = None
+    if parent_id:
+        try:
+            parent = Comment.objects.get(pk=parent_id, achievement=achievement)
+        except Comment.DoesNotExist:
+            parent = None
+    c = Comment.objects.create(user=request.user, achievement=achievement, parent=parent, content=content)
+    return JsonResponse({
+        "id": c.id,
+        "user": c.user.name,
+        "avatar": getattr(c.user.profile_photo, "url", ""),
+        "content": c.content,
+        "created_at": c.created_at.isoformat(),
+        "parent": c.parent_id,
+    })
+
+
+def comments_list(request, achievement_id):
+    try:
+        achievement = Achievement.objects.get(pk=achievement_id)
+    except Achievement.DoesNotExist:
+        return JsonResponse({"error": "Not found"}, status=404)
+    page = int(request.GET.get("page", 1))
+    qs = Comment.objects.filter(achievement=achievement, parent__isnull=True).order_by("-created_at")
+    paginator = Paginator(qs, 10)
+    page_obj = paginator.get_page(page)
+    items = []
+    for c in page_obj.object_list:
+        items.append({
+            "id": c.id,
+            "user": c.user.name,
+            "avatar": getattr(c.user.profile_photo, "url", ""),
+            "content": c.content,
+            "created_at": c.created_at.isoformat(),
+            "replies": [
+                {
+                    "id": r.id,
+                    "user": r.user.name,
+                    "avatar": getattr(r.user.profile_photo, "url", ""),
+                    "content": r.content,
+                    "created_at": r.created_at.isoformat(),
+                }
+                for r in c.replies.all().order_by("created_at")
+            ],
+        })
+    return JsonResponse({
+        "items": items,
+        "page": page_obj.number,
+        "has_next": page_obj.has_next(),
+    })
+
+
+@login_required
+def manage_skills_view(request):
+    skills = Achievement.objects.filter(user=request.user, category=Achievement.CATEGORY_SKILL).order_by("-created_at")
+    if request.method == "POST":
+        form = SkillsForm(request.POST)
+        if form.is_valid():
+            ach = form.save(commit=False)
+            ach.title = form.cleaned_data.get("value")
+            ach.user = request.user
+            ach.category = Achievement.CATEGORY_SKILL
+            ach.points = 5
+            ach.save()
+            messages.success(request, "Skill added.")
+            return redirect("manage_skills")
+        messages.error(request, "Please correct the errors below.")
+    else:
+        form = SkillsForm()
+    return render(request, "manage_skills.html", {"skills": skills, "form": form})

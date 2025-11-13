@@ -4,9 +4,10 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum
+from django.db.models import Sum, Count
 from django.db.models.functions import Coalesce
 from leaderboard.models import Achievement
+from .forms import ProfileForm
 
 
 def signup_view(request):
@@ -55,6 +56,36 @@ def logout_view(request):
 
 @login_required
 def profile_view(request):
-    achievements = Achievement.objects.filter(user=request.user).order_by('-created_at')
+    profile_user = request.user
+    achievements = Achievement.objects.filter(user=profile_user).annotate(likes_count=Count('likes')).order_by('-created_at')
     total_points = achievements.aggregate(total=Coalesce(Sum('points'), 0))['total']
-    return render(request, 'profile.html', {"achievements": achievements, "total_points": total_points})
+    skills = achievements.filter(category=Achievement.CATEGORY_SKILL)
+    certificates = achievements.filter(category=Achievement.CATEGORY_CERTIFICATION)
+    form = ProfileForm(instance=profile_user)
+    return render(request, 'profile.html', {"profile_user": profile_user, "is_own_profile": True, "achievements": achievements, "total_points": total_points, "form": form, "skills": skills, "certificates": certificates})
+
+
+@login_required
+def edit_profile_view(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated successfully.')
+        else:
+            messages.error(request, 'Please fix the errors below.')
+    return redirect('profile')
+
+
+@login_required
+def public_profile_view(request, user_id: int):
+    try:
+        profile_user = User.objects.get(pk=user_id)
+    except User.DoesNotExist:
+        messages.error(request, "User not found.")
+        return redirect('leaderboard')
+    achievements = Achievement.objects.filter(user=profile_user).annotate(likes_count=Count('likes')).order_by('-created_at')
+    total_points = achievements.aggregate(total=Coalesce(Sum('points'), 0))['total']
+    skills = achievements.filter(category=Achievement.CATEGORY_SKILL)
+    certificates = achievements.filter(category=Achievement.CATEGORY_CERTIFICATION)
+    return render(request, 'profile.html', {"profile_user": profile_user, "is_own_profile": False, "achievements": achievements, "total_points": total_points, "skills": skills, "certificates": certificates})
