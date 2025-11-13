@@ -90,11 +90,11 @@ from decouple import config
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'unirank',
-        'USER': 'gourav',
-        'PASSWORD': 'Gourav@123',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': config('DB_NAME', default='unirank'),
+        'USER': config('DB_USER', default='gourav'),
+        'PASSWORD': config('DB_PASSWORD', default='Dayarita@04'),
+        'HOST': config('DB_HOST', default='localhost'),
+        'PORT': config('DB_PORT', default='3306'),
         'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },

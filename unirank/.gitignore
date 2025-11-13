@@ -29,7 +29,8 @@ db.sqlite3
 media/
 static/
 /base1.html
-/settings.py
+unirank/settings.py
+unirank/unirank/settings.py
 
 # IDE-specific files
 .idea/
