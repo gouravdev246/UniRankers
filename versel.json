@@ -1,28 +1,10 @@
 {
-  "version": 2,
   "builds": [
-    {
-      "src": "unirank/unirank/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    },
-    {
-      "src": "build_files.sh",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "staticfiles"
-      }
-    }
+    {"src": "build_files.sh", "use": "@vercel/static-build", "config": {"distDir": "staticfiles_build"}},
+    {"src": "manage.py", "use": "@vercel/python"}
   ],
   "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "unirank/unirank/wsgi.py"
-    }
-  ],
-  "outputDirectory": "staticfiles"
+    {"src": "/static/(.*)", "dest": "staticfiles_build/static/$1"},
+    {"src": "/(.*)", "dest": "manage.py"}
+  ]
 }
