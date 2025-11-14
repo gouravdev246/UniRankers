@@ -5,6 +5,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponseBadRequest
+import json
 from django.http import HttpResponseForbidden
 
 from users.models import CustomUser as User
@@ -86,11 +87,24 @@ def like_toggle(request, achievement_id):
 
 
 @login_required
+@login_required
 def comment_create(request, achievement_id):
     if request.method != "POST":
         return HttpResponseBadRequest()
-    content = request.POST.get("content", "").strip()
+    content = request.POST.get("content")
     parent_id = request.POST.get("parent")
+    if content is None:
+        try:
+            data = json.loads(request.body.decode("utf-8"))
+            content = (data.get("content") or "").strip()
+            parent_id = data.get("parent")
+        except Exception:
+            content = ""
+            parent_id = None
+    else:
+        content = content.strip()
+    if len(content) > 300:
+        return JsonResponse({"error": "Too long"}, status=400)
     if not content:
         return JsonResponse({"error": "Empty"}, status=400)
     try:

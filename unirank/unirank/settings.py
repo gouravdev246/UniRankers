@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'mentorship',
     'users',
     'portfolio',
+    'helpgrow',
     'django.contrib.sites',  
     'allauth',
     'allauth.account',
@@ -90,15 +91,8 @@ WSGI_APPLICATION = 'unirank.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'unirank',
-        'USER': 'gourav',
-        'PASSWORD': 'Gourav@123',
-        'HOST': 'localhost',
-        'PORT': '3306',
-        'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 

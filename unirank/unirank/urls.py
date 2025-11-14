@@ -25,6 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('' , views.home , name='home'),
     path('leaderboard/', include('leaderboard.urls')),
+    path('helpgrow/', include('helpgrow.urls')),
     # path('', include('mentorship.urls')),
     path('users/', include('users.urls')),
     path('contact/', views.contact, name='contact'),
